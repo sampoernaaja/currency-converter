@@ -629,9 +629,368 @@
     .rank-1 { background: rgba(255,215,0,0.15); color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
     .rank-2 { background: rgba(192,192,192,0.15); color: #c0c0c0; border: 1px solid rgba(192,192,192,0.3); }
     .rank-3 { background: rgba(205,127,50,0.15); color: #cd7f32; border: 1px solid rgba(205,127,50,0.3); }
+
+    /* ===== INTRO SPLASH SCREEN ===== */
+    #intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    #intro-overlay.hide {
+      animation: overlayOut 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+    }
+
+    @keyframes overlayOut {
+      0%   { clip-path: inset(0 0 0 0); opacity: 1; }
+      100% { clip-path: inset(0 0 100% 0); opacity: 0; }
+    }
+
+    /* Grid lines on intro */
+    #intro-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      animation: gridFadeIn 0.5s ease forwards;
+    }
+
+    @keyframes gridFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Radial glow behind logo */
+    .intro-glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,255,0.12) 0%, transparent 70%);
+      animation: glowPulseIntro 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes glowPulseIntro {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50%       { transform: scale(1.2); opacity: 1; }
+    }
+
+    .intro-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Hexagon / icon mark */
+    .intro-icon {
+      width: 80px;
+      height: 80px;
+      border: 2px solid rgba(0,229,255,0.5);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      position: relative;
+      animation: iconEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+      background: rgba(0,229,255,0.06);
+      box-shadow: 0 0 40px rgba(0,229,255,0.15), inset 0 0 20px rgba(0,229,255,0.05);
+    }
+
+    @keyframes iconEntrance {
+      from { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    /* Rotating ring */
+    .intro-icon::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 28px;
+      border: 1px solid transparent;
+      border-top-color: var(--accent);
+      border-right-color: rgba(0,229,255,0.3);
+      animation: ringRotate 1.5s linear infinite;
+    }
+
+    @keyframes ringRotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .intro-icon::after {
+      content: '';
+      position: absolute;
+      inset: -16px;
+      border-radius: 34px;
+      border: 1px solid transparent;
+      border-bottom-color: var(--green);
+      border-left-color: rgba(0,255,163,0.2);
+      animation: ringRotate 2.5s linear infinite reverse;
+    }
+
+    .intro-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      animation: textSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+    }
+
+    .intro-subtitle {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      text-transform: uppercase;
+      animation: textSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+    }
+
+    @keyframes textSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Progress bar */
+    .intro-bar-wrap {
+      width: 200px;
+      height: 2px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 99px;
+      overflow: hidden;
+      animation: textSlideIn 0.4s ease 0.7s both;
+    }
+
+    .intro-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+      border-radius: 99px;
+      transition: width 0.05s linear;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .intro-percent {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.1em;
+      animation: textSlideIn 0.4s ease 0.8s both;
+      margin-top: -10px;
+    }
+
+    /* Scanline sweep */
+    .intro-scan {
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0,229,255,0.4), transparent);
+      animation: scanLine 2s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes scanLine {
+      from { top: -2px; }
+      to   { top: 100%; }
+    }
+
+    /* Corner decorations */
+    .corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      opacity: 0.5;
+      animation: textSlideIn 0.4s ease 0.3s both;
+    }
+    .corner-tl { top: 30px; left: 30px; border-top: 1.5px solid var(--accent); border-left: 1.5px solid var(--accent); }
+    .corner-tr { top: 30px; right: 30px; border-top: 1.5px solid var(--accent); border-right: 1.5px solid var(--accent); }
+    .corner-bl { bottom: 30px; left: 30px; border-bottom: 1.5px solid var(--accent); border-left: 1.5px solid var(--accent); }
+    .corner-br { bottom: 30px; right: 30px; border-bottom: 1.5px solid var(--accent); border-right: 1.5px solid var(--accent); }
+
+    /* Main content hidden until intro done */
+    .wrapper { opacity: 0; }
+    .wrapper.revealed {
+      opacity: 1;
+      animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== ANIMATED BACKGROUND ===== */
+    @keyframes bgShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body::before {
+      animation: bgShift 12s ease infinite;
+      background-size: 200% 200% !important;
+    }
+
+    /* ===== CARD SHIMMER ===== */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(105deg, transparent, rgba(255,255,255,0.04), transparent);
+      transform: skewX(-20deg);
+      animation: shimmer 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes shimmer {
+      0%   { left: -60%; opacity: 0; }
+      20%  { opacity: 1; }
+      50%  { left: 130%; opacity: 0; }
+      100% { left: 130%; opacity: 0; }
+    }
+
+    /* ===== PULSING GLOW ON CARD BORDER ===== */
+    @keyframes borderGlow {
+      0%, 100% { box-shadow: 0 0 0px rgba(0,229,255,0); }
+      50%       { box-shadow: 0 0 20px rgba(0,229,255,0.15), 0 0 40px rgba(0,229,255,0.05); }
+    }
+    .card { animation: borderGlow 4s ease-in-out infinite; }
+
+    /* ===== CONVERT BUTTON PULSE ===== */
+    @keyframes btnPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,229,255,0.4); }
+      50%       { box-shadow: 0 0 0 8px rgba(0,229,255,0); }
+    }
+    .convert-btn { animation: btnPulse 2.5s ease-in-out infinite; }
+    .convert-btn:hover { animation: none; }
+
+    /* ===== RIPPLE ===== */
+    .ripple-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: scale(0);
+      animation: rippleAnim 0.6s linear;
+      pointer-events: none;
+    }
+    @keyframes rippleAnim {
+      to { transform: scale(4); opacity: 0; }
+    }
+    .convert-btn { position: relative; overflow: hidden; }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal:nth-child(2) { transition-delay: 0.12s; }
+    .reveal:nth-child(3) { transition-delay: 0.24s; }
+
+    /* ===== RESULT NUMBER COUNTER ===== */
+    .result-amount {
+      transition: color 0.3s;
+    }
+    @keyframes numberPop {
+      0%   { transform: scale(0.8); opacity: 0; }
+      60%  { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .result-amount.pop {
+      animation: numberPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* ===== PAIR CHIP HOVER ===== */
+    @keyframes chipPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(0,229,255,0.4); }
+      100% { box-shadow: 0 0 0 8px rgba(0,229,255,0); }
+    }
+    .pair-chip:active { animation: chipPulse 0.4s ease-out; }
+
+    /* ===== FLOATING LABEL ===== */
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-3px); }
+    }
+    .label-top { animation: floatBadge 3s ease-in-out infinite; }
+
+    /* ===== H1 GRADIENT ANIMATION ===== */
+    @keyframes gradientText {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    h1 {
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 40%, var(--green) 70%, #fff 100%);
+      background-size: 300% 300%;
+      animation: gradientText 6s ease infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== RECO CARD ENTRANCE ===== */
+    .reco-card {
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ===== SWAP BTN SPIN ===== */
+    .swap-btn.spinning {
+      animation: fullSpin 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes fullSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(180deg); }
+    }
   </style>
 </head>
 <body>
+<!-- ===== INTRO SPLASH ===== -->
+<div id="intro-overlay">
+  <div class="intro-scan"></div>
+  <div class="intro-glow"></div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+  <div class="intro-content">
+    <div class="intro-icon">💱</div>
+    <div class="intro-title">Currency Converter</div>
+    <div class="intro-subtitle">⬡ Financial Tool · Real-Time</div>
+    <div class="intro-bar-wrap">
+      <div class="intro-bar" id="introBar"></div>
+    </div>
+    <div class="intro-percent" id="introPercent">0%</div>
+  </div>
+</div>
+
+<canvas id="particles-canvas"></canvas>
 <div class="wrapper">
   <div class="label-top">⬡ Financial Tool</div>
   <h1>Currency<br/>Converter</h1>
@@ -716,7 +1075,7 @@
     <div class="reco-grid">
 
       <!-- CARD 1: Wise -->
-      <a class="reco-card" href="https://wise.com/id" target="_blank" rel="noopener">
+      <a class="reco-card reveal" href="https://wise.com/id" target="_blank" rel="noopener">
         <div class="rank-badge rank-1">1</div>
         <div class="reco-card-top">
           <div class="reco-logo-wrap">
@@ -744,7 +1103,7 @@
       </a>
 
       <!-- CARD 2: Transfez -->
-      <a class="reco-card" href="https://transfez.com" target="_blank" rel="noopener">
+      <a class="reco-card reveal" href="https://transfez.com" target="_blank" rel="noopener">
         <div class="rank-badge rank-2">2</div>
         <div class="reco-card-top">
           <div class="reco-logo-wrap">
@@ -772,7 +1131,7 @@
       </a>
 
       <!-- CARD 3: Flip Globe -->
-      <a class="reco-card" href="https://flip.id/globe" target="_blank" rel="noopener">
+      <a class="reco-card reveal" href="https://flip.id/globe" target="_blank" rel="noopener">
         <div class="rank-badge rank-3">3</div>
         <div class="reco-card-top">
           <div class="reco-logo-wrap">
@@ -809,6 +1168,169 @@
 </div>
 
 <script>
+  /* ===== INTRO SPLASH ANIMATION ===== */
+  (function() {
+    const overlay  = document.getElementById('intro-overlay');
+    const bar      = document.getElementById('introBar');
+    const percent  = document.getElementById('introPercent');
+    const wrapper  = document.querySelector('.wrapper');
+    let progress   = 0;
+
+    const steps = [
+      { target: 30,  speed: 18, delay: 100  },
+      { target: 65,  speed: 12, delay: 0    },
+      { target: 85,  speed: 6,  delay: 200  },
+      { target: 100, speed: 20, delay: 0    },
+    ];
+
+    function runStep(i) {
+      if (i >= steps.length) return;
+      const { target, speed, delay } = steps[i];
+      setTimeout(() => {
+        const interval = setInterval(() => {
+          if (progress >= target) {
+            clearInterval(interval);
+            runStep(i + 1);
+            return;
+          }
+          progress++;
+          bar.style.width = progress + '%';
+          percent.textContent = progress + '%';
+        }, speed);
+      }, delay);
+    }
+
+    runStep(0);
+
+    // Watch for 100% completion
+    const done = setInterval(() => {
+      if (progress >= 100) {
+        clearInterval(done);
+        setTimeout(() => {
+          overlay.classList.add('hide');
+          wrapper.classList.add('revealed');
+          overlay.addEventListener('animationend', () => overlay.remove(), { once: true });
+        }, 300);
+      }
+    }, 50);
+  })();
+
+  /* ===== PARTICLES ===== */
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 1.5 + 0.3;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.4 + 0.05;
+      const colors = ['0,229,255', '0,255,163', '255,107,53'];
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.life = 0;
+      this.maxLife = Math.random() * 300 + 200;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.life++;
+      if (this.life > this.maxLife) this.reset();
+    }
+    draw() {
+      const fade = this.life < 30 ? this.life / 30 : this.life > this.maxLife - 30 ? (this.maxLife - this.life) / 30 : 1;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color},${this.opacity * fade})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 80; i++) {
+    const p = new Particle();
+    p.life = Math.random() * p.maxLife;
+    particles.push(p);
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  /* ===== RIPPLE EFFECT ===== */
+  document.querySelector('.convert-btn').addEventListener('click', function(e) {
+    const btn = this;
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple-circle';
+    ripple.style.cssText = `
+      width: ${size}px; height: ${size}px;
+      left: ${e.clientX - rect.left - size/2}px;
+      top: ${e.clientY - rect.top - size/2}px;
+    `;
+    btn.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  });
+
+  /* ===== SCROLL REVEAL ===== */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ===== NUMBER COUNTER ANIMATION ===== */
+  function animateNumber(el, endText) {
+    el.classList.remove('pop');
+    void el.offsetWidth; // reflow
+    const parts = endText.match(/^([\d.,]+)\s*(.*)$/);
+    if (!parts) { el.textContent = endText; el.classList.add('pop'); return; }
+    const endNum = parseFloat(parts[1].replace(/\./g, '').replace(',', '.'));
+    const suffix = ' ' + parts[2];
+    const duration = 600;
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const current = endNum * ease;
+      const formatted = current.toLocaleString('id-ID', {
+        minimumFractionDigits: endNum < 10 ? 4 : 2,
+        maximumFractionDigits: endNum < 10 ? 4 : 2
+      });
+      el.textContent = formatted + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = endText;
+    }
+    el.classList.add('pop');
+    requestAnimationFrame(step);
+  }
+
+  /* ===== SWAP BTN SPIN ===== */
+  function swapWithAnim() {
+    const btn = document.querySelector('.swap-btn');
+    btn.classList.add('spinning');
+    btn.addEventListener('animationend', () => btn.classList.remove('spinning'), { once: true });
+    swapCurrencies();
+  }
+
+  /* ===== CONVERT FUNCTION ===== */
   async function convert() {
     const amount = parseFloat(document.getElementById('amount').value);
     const from   = document.getElementById('fromCurrency').value;
@@ -842,11 +1364,12 @@
         maximumFractionDigits: result < 10 ? 4 : 2
       });
 
-      document.getElementById('resultAmount').textContent = `${formatted} ${to}`;
+      const resultAmountEl = document.getElementById('resultAmount');
       document.getElementById('resultRate').textContent =
         `1 ${from} = ${rate.toLocaleString('id-ID', {minimumFractionDigits:2, maximumFractionDigits:4})} ${to}`;
 
       resCard.classList.add('visible');
+      animateNumber(resultAmountEl, `${formatted} ${to}`);
     } catch (e) {
       errEl.textContent = '⚠ Gagal mengambil kurs. Cek koneksi internet kamu.';
       errEl.style.display = 'block';
@@ -875,6 +1398,9 @@
   document.getElementById('amount').addEventListener('keypress', e => {
     if (e.key === 'Enter') convert();
   });
+
+  /* Replace inline swap onclick */
+  document.querySelector('.swap-btn').setAttribute('onclick', 'swapWithAnim()');
 </script>
 </body>
 </html>
