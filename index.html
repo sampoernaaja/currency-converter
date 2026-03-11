@@ -27,10 +27,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      overflow-x: hidden;
+      padding: 20px 0 60px;
     }
 
-    /* Animated background */
     body::before {
       content: '';
       position: fixed;
@@ -43,7 +43,6 @@
       z-index: 0;
     }
 
-    /* Grid overlay */
     body::after {
       content: '';
       position: fixed;
@@ -108,9 +107,7 @@
       opacity: 0.6;
     }
 
-    .field {
-      margin-bottom: 20px;
-    }
+    .field { margin-bottom: 20px; }
 
     .field-label {
       font-size: 11px;
@@ -182,7 +179,6 @@
       color: var(--text);
     }
 
-    /* Swap button */
     .swap-area {
       display: flex;
       align-items: center;
@@ -244,11 +240,8 @@
       box-shadow: 0 8px 30px rgba(0,229,255,0.3);
     }
 
-    .convert-btn:active {
-      transform: translateY(0);
-    }
+    .convert-btn:active { transform: translateY(0); }
 
-    /* Result */
     .result-card {
       margin-top: 20px;
       background: rgba(0,255,163,0.05);
@@ -259,9 +252,7 @@
       display: none;
     }
 
-    .result-card.visible {
-      display: block;
-    }
+    .result-card.visible { display: block; }
 
     .result-label {
       font-size: 11px;
@@ -287,7 +278,6 @@
       font-family: 'DM Mono', monospace;
     }
 
-    /* Loading */
     .loading {
       display: inline-block;
       width: 16px;
@@ -300,9 +290,7 @@
       vertical-align: middle;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     .error {
       color: var(--accent2);
@@ -316,9 +304,7 @@
       border-radius: 10px;
     }
 
-    .popular-pairs {
-      margin-top: 20px;
-    }
+    .popular-pairs { margin-top: 20px; }
 
     .popular-title {
       font-size: 11px;
@@ -361,6 +347,288 @@
       color: var(--muted);
       font-family: 'DM Mono', monospace;
     }
+
+    /* ===== REKOMENDASI SECTION ===== */
+    .reco-section {
+      margin-top: 40px;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+    }
+
+    .reco-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .reco-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--accent2);
+      text-transform: uppercase;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .reco-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #fff 30%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .reco-desc {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .reco-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .reco-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      display: block;
+      cursor: pointer;
+    }
+
+    .reco-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+
+    .reco-card:nth-child(1)::before {
+      background: linear-gradient(90deg, transparent, #00b9e8, transparent);
+    }
+    .reco-card:nth-child(2)::before {
+      background: linear-gradient(90deg, transparent, #5b5bd6, transparent);
+    }
+    .reco-card:nth-child(3)::before {
+      background: linear-gradient(90deg, transparent, #ff6b35, transparent);
+    }
+
+    .reco-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.15);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .reco-card:hover::before { opacity: 1; }
+
+    .reco-card-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .reco-logo-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .reco-logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6px;
+    }
+
+    .reco-logo-fallback {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .reco-info { flex: 1; }
+
+    .reco-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .reco-tagline {
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .reco-badge {
+      font-size: 10px;
+      font-family: 'DM Mono', monospace;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .badge-green {
+      background: rgba(0,255,163,0.12);
+      color: var(--green);
+      border: 1px solid rgba(0,255,163,0.25);
+    }
+
+    .badge-blue {
+      background: rgba(0,229,255,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(0,229,255,0.2);
+    }
+
+    .badge-orange {
+      background: rgba(255,107,53,0.1);
+      color: var(--accent2);
+      border: 1px solid rgba(255,107,53,0.2);
+    }
+
+    .reco-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 14px;
+    }
+
+    .reco-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .reco-feat {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      line-height: 1.4;
+    }
+
+    .reco-feat-icon {
+      color: var(--accent);
+      font-size: 11px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .reco-feat-icon.orange { color: var(--accent2); }
+    .reco-feat-icon.purple { color: #9b8cff; }
+
+    .reco-fee-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+
+    .reco-fee-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.05em;
+    }
+
+    .reco-fee-value {
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .reco-fee-value.green { color: var(--green); }
+    .reco-fee-value.blue { color: var(--accent); }
+    .reco-fee-value.orange { color: var(--accent2); }
+
+    .reco-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 14px;
+      padding: 11px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+
+    .reco-card:nth-child(1) .reco-cta {
+      background: rgba(0,185,232,0.12);
+      color: #00b9e8;
+      border: 1px solid rgba(0,185,232,0.25);
+    }
+    .reco-card:nth-child(2) .reco-cta {
+      background: rgba(91,91,214,0.12);
+      color: #9b8cff;
+      border: 1px solid rgba(91,91,214,0.25);
+    }
+    .reco-card:nth-child(3) .reco-cta {
+      background: rgba(255,107,53,0.1);
+      color: var(--accent2);
+      border: 1px solid rgba(255,107,53,0.2);
+    }
+
+    .reco-card:hover .reco-cta {
+      filter: brightness(1.15);
+    }
+
+    .arrow-icon {
+      font-size: 14px;
+      transition: transform 0.2s;
+    }
+
+    .reco-card:hover .arrow-icon { transform: translateX(3px); }
+
+    .rank-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .rank-1 { background: rgba(255,215,0,0.15); color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
+    .rank-2 { background: rgba(192,192,192,0.15); color: #c0c0c0; border: 1px solid rgba(192,192,192,0.3); }
+    .rank-3 { background: rgba(205,127,50,0.15); color: #cd7f32; border: 1px solid rgba(205,127,50,0.3); }
   </style>
 </head>
 <body>
@@ -369,7 +637,6 @@
   <h1>Currency<br/>Converter</h1>
 
   <div class="card">
-    <!-- FROM -->
     <div class="field">
       <span class="field-label">Jumlah & Mata Uang Asal</span>
       <div class="input-row">
@@ -391,12 +658,10 @@
       </div>
     </div>
 
-    <!-- SWAP -->
     <div class="swap-area">
       <button class="swap-btn" onclick="swapCurrencies()" title="Tukar Mata Uang">⇅</button>
     </div>
 
-    <!-- TO -->
     <div class="field">
       <span class="field-label">Konversi Ke</span>
       <div class="input-row">
@@ -417,20 +682,16 @@
       </div>
     </div>
 
-    <button class="convert-btn" onclick="convert()">
-      Convert Sekarang
-    </button>
+    <button class="convert-btn" onclick="convert()">Convert Sekarang</button>
 
     <div class="error" id="error"></div>
 
-    <!-- RESULT -->
     <div class="result-card" id="result">
       <div class="result-label">✦ Hasil Konversi</div>
       <div class="result-amount" id="resultAmount">—</div>
       <div class="result-rate" id="resultRate"></div>
     </div>
 
-    <!-- POPULAR PAIRS -->
     <div class="popular-pairs">
       <div class="popular-title">Pasangan Populer</div>
       <div class="pairs-grid">
@@ -445,6 +706,106 @@
   </div>
 
   <div class="footer">Data dari exchangerate-api.com · Real-time</div>
+
+  <!-- ===== REKOMENDASI SECTION ===== -->
+  <div class="reco-section">
+    <div class="reco-label">⬡ Rekomendasi Transfer</div>
+    <div class="reco-title">Kirim Uang Termurah</div>
+    <p class="reco-desc">Layanan transfer internasional terpercaya dengan fee paling hemat untuk kamu.</p>
+
+    <div class="reco-grid">
+
+      <!-- CARD 1: Wise -->
+      <a class="reco-card" href="https://wise.com/id" target="_blank" rel="noopener">
+        <div class="rank-badge rank-1">1</div>
+        <div class="reco-card-top">
+          <div class="reco-logo-wrap">
+            <img src="https://logo.clearbit.com/wise.com" alt="Wise"
+              onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'reco-logo-fallback\' style=\'color:#00b9e8\'>W</span>'"/>
+          </div>
+          <div class="reco-info">
+            <div class="reco-name">Wise</div>
+            <div class="reco-tagline">Money without borders</div>
+          </div>
+          <span class="reco-badge badge-green">Mid-Market Rate</span>
+        </div>
+        <div class="reco-divider"></div>
+        <div class="reco-features">
+          <div class="reco-feat"><span class="reco-feat-icon">✦</span>Transfer ke 80+ negara</div>
+          <div class="reco-feat"><span class="reco-feat-icon">✦</span>Kurs pasar tengah</div>
+          <div class="reco-feat"><span class="reco-feat-icon">✦</span>Tanpa biaya tersembunyi</div>
+          <div class="reco-feat"><span class="reco-feat-icon">✦</span>74% tiba < 20 detik</div>
+        </div>
+        <div class="reco-fee-row">
+          <span class="reco-fee-label">💸 Fee mulai dari</span>
+          <span class="reco-fee-value green">~0.41% dari jumlah transfer</span>
+        </div>
+        <div class="reco-cta">Buka Wise <span class="arrow-icon">→</span></div>
+      </a>
+
+      <!-- CARD 2: Transfez -->
+      <a class="reco-card" href="https://transfez.com" target="_blank" rel="noopener">
+        <div class="rank-badge rank-2">2</div>
+        <div class="reco-card-top">
+          <div class="reco-logo-wrap">
+            <img src="https://logo.clearbit.com/transfez.com" alt="Transfez"
+              onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'reco-logo-fallback\' style=\'color:#9b8cff\'>T</span>'"/>
+          </div>
+          <div class="reco-info">
+            <div class="reco-name">Transfez</div>
+            <div class="reco-tagline">Buatan Indonesia, untuk Indonesia</div>
+          </div>
+          <span class="reco-badge badge-blue">Flat Fee</span>
+        </div>
+        <div class="reco-divider"></div>
+        <div class="reco-features">
+          <div class="reco-feat"><span class="reco-feat-icon purple">✦</span>Transfer ke 70+ negara</div>
+          <div class="reco-feat"><span class="reco-feat-icon purple">✦</span>Biaya flat (tidak berubah)</div>
+          <div class="reco-feat"><span class="reco-feat-icon purple">✦</span>Izin Bank Indonesia</div>
+          <div class="reco-feat"><span class="reco-feat-icon purple">✦</span>Transfer pertama GRATIS</div>
+        </div>
+        <div class="reco-fee-row">
+          <span class="reco-fee-label">💸 Fee mulai dari</span>
+          <span class="reco-fee-value blue">Rp 45.000 flat / transaksi</span>
+        </div>
+        <div class="reco-cta">Buka Transfez <span class="arrow-icon">→</span></div>
+      </a>
+
+      <!-- CARD 3: Flip Globe -->
+      <a class="reco-card" href="https://flip.id/globe" target="_blank" rel="noopener">
+        <div class="rank-badge rank-3">3</div>
+        <div class="reco-card-top">
+          <div class="reco-logo-wrap">
+            <img src="https://logo.clearbit.com/flip.id" alt="Flip Globe"
+              onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'reco-logo-fallback\' style=\'color:#ff6b35\'>F</span>'"/>
+          </div>
+          <div class="reco-info">
+            <div class="reco-name">Flip Globe</div>
+            <div class="reco-tagline">60+ negara · Harga termurah & aman</div>
+          </div>
+          <span class="reco-badge badge-orange">On-Time Guarantee</span>
+        </div>
+        <div class="reco-divider"></div>
+        <div class="reco-features">
+          <div class="reco-feat"><span class="reco-feat-icon orange">✦</span>Transfer ke 60+ negara</div>
+          <div class="reco-feat"><span class="reco-feat-icon orange">✦</span>Kurs FX real-time</div>
+          <div class="reco-feat"><span class="reco-feat-icon orange">✦</span>Izin Bank Indonesia</div>
+          <div class="reco-feat"><span class="reco-feat-icon orange">✦</span>Proses instan</div>
+        </div>
+        <div class="reco-fee-row">
+          <span class="reco-fee-label">💸 Fee mulai dari</span>
+          <span class="reco-fee-value orange">Rp 25.000 / transaksi</span>
+        </div>
+        <div class="reco-cta">Buka Flip Globe <span class="arrow-icon">→</span></div>
+      </a>
+
+    </div>
+
+    <div class="footer" style="margin-top:16px;">
+      ⚠ Fee dapat berubah · Selalu cek di website masing-masing
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -511,7 +872,6 @@
     convert();
   }
 
-  // Enter key support
   document.getElementById('amount').addEventListener('keypress', e => {
     if (e.key === 'Enter') convert();
   });
